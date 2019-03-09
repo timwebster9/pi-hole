@@ -1,0 +1,6 @@
+version: "2.2"
+services:
+  nginx:
+    container_name: nginx-phobos
+    image: timwebster9/nginx-phobos
+    network_mode: "host"
