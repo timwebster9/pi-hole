@@ -1,0 +1,135 @@
+﻿apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  annotations:
+    deployment.kubernetes.io/revision: "7"
+    field.cattle.io/creatorId: user-dmrxt
+    field.cattle.io/publicEndpoints: '[{"nodeName":"c-xgq6s:m-5060341c21f8","addresses":["192.168.1.116"],"port":32400,"protocol":"TCP","podName":"default:plex-5df79bb97c-5pxl9","allNodes":false},{"nodeName":"c-xgq6s:m-5060341c21f8","addresses":["192.168.1.116"],"port":3005,"protocol":"TCP","podName":"default:plex-5df79bb97c-5pxl9","allNodes":false},{"nodeName":"c-xgq6s:m-5060341c21f8","addresses":["192.168.1.116"],"port":8324,"protocol":"TCP","podName":"default:plex-5df79bb97c-5pxl9","allNodes":false},{"nodeName":"c-xgq6s:m-5060341c21f8","addresses":["192.168.1.116"],"port":32469,"protocol":"TCP","podName":"default:plex-5df79bb97c-5pxl9","allNodes":false},{"nodeName":"c-xgq6s:m-5060341c21f8","addresses":["192.168.1.116"],"port":1900,"protocol":"UDP","podName":"default:plex-5df79bb97c-5pxl9","allNodes":false},{"nodeName":"c-xgq6s:m-5060341c21f8","addresses":["192.168.1.116"],"port":32410,"protocol":"UDP","podName":"default:plex-5df79bb97c-5pxl9","allNodes":false},{"nodeName":"c-xgq6s:m-5060341c21f8","addresses":["192.168.1.116"],"port":32412,"protocol":"UDP","podName":"default:plex-5df79bb97c-5pxl9","allNodes":false},{"nodeName":"c-xgq6s:m-5060341c21f8","addresses":["192.168.1.116"],"port":32413,"protocol":"UDP","podName":"default:plex-5df79bb97c-5pxl9","allNodes":false},{"nodeName":"c-xgq6s:m-5060341c21f8","addresses":["192.168.1.116"],"port":32414,"protocol":"UDP","podName":"default:plex-5df79bb97c-5pxl9","allNodes":false}]'
+  creationTimestamp: 2018-12-29T22:59:23Z
+  generation: 12
+  labels:
+    cattle.io/creator: norman
+    workload.user.cattle.io/workloadselector: deployment-default-plex
+  name: plex
+  namespace: default
+  resourceVersion: "7740911"
+  selfLink: /apis/apps/v1beta2/namespaces/default/deployments/plex
+  uid: 61fd0788-0bbd-11e9-b8da-b8ac6f34f1b5
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      workload.user.cattle.io/workloadselector: deployment-default-plex
+  strategy:
+    rollingUpdate:
+      maxSurge: 0
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      annotations:
+        cattle.io/timestamp: 2018-12-30T14:41:51Z
+        field.cattle.io/ports: '[[{"containerPort":32400,"dnsName":"plex-hostport","hostPort":32400,"kind":"HostPort","name":"32400tcp324000","protocol":"TCP","sourcePort":32400},{"containerPort":3005,"dnsName":"plex-hostport","hostPort":3005,"kind":"HostPort","name":"3005tcp30050","protocol":"TCP","sourcePort":3005},{"containerPort":8324,"dnsName":"plex-hostport","hostPort":8324,"kind":"HostPort","name":"8324tcp83240","protocol":"TCP","sourcePort":8324},{"containerPort":32469,"dnsName":"plex-hostport","hostPort":32469,"kind":"HostPort","name":"32469tcp324690","protocol":"TCP","sourcePort":32469},{"containerPort":1900,"dnsName":"plex-hostport","hostPort":1900,"kind":"HostPort","name":"1900udp19000","protocol":"UDP","sourcePort":1900},{"containerPort":32410,"dnsName":"plex-hostport","hostPort":32410,"kind":"HostPort","name":"32410udp324100","protocol":"UDP","sourcePort":32410},{"containerPort":32412,"dnsName":"plex-hostport","hostPort":32412,"kind":"HostPort","name":"32412udp324120","protocol":"UDP","sourcePort":32412},{"containerPort":32413,"dnsName":"plex-hostport","hostPort":32413,"kind":"HostPort","name":"32413udp324130","protocol":"UDP","sourcePort":32413},{"containerPort":32414,"dnsName":"plex-hostport","hostPort":32414,"kind":"HostPort","name":"32414udp324140","protocol":"UDP","sourcePort":32414}]]'
+      creationTimestamp: null
+      labels:
+        workload.user.cattle.io/workloadselector: deployment-default-plex
+    spec:
+      containers:
+      - env:
+        - name: ADVERTISE_IP
+          value: http://192.168.1.116:32400/
+        - name: PLEX_CLAIM
+          value: claim-DcysrrMqSoJHNbA6qwbQ
+        - name: TZ
+          value: Europe/London
+        image: plexinc/pms-docker:1.14.1.5488-cc260c476
+        imagePullPolicy: Always
+        name: plex
+        ports:
+        - containerPort: 32400
+          hostPort: 32400
+          name: 32400tcp324000
+          protocol: TCP
+        - containerPort: 3005
+          hostPort: 3005
+          name: 3005tcp30050
+          protocol: TCP
+        - containerPort: 8324
+          hostPort: 8324
+          name: 8324tcp83240
+          protocol: TCP
+        - containerPort: 32469
+          hostPort: 32469
+          name: 32469tcp324690
+          protocol: TCP
+        - containerPort: 1900
+          hostPort: 1900
+          name: 1900udp19000
+          protocol: UDP
+        - containerPort: 32410
+          hostPort: 32410
+          name: 32410udp324100
+          protocol: UDP
+        - containerPort: 32412
+          hostPort: 32412
+          name: 32412udp324120
+          protocol: UDP
+        - containerPort: 32413
+          hostPort: 32413
+          name: 32413udp324130
+          protocol: UDP
+        - containerPort: 32414
+          hostPort: 32414
+          name: 32414udp324140
+          protocol: UDP
+        resources: {}
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities: {}
+          privileged: false
+          readOnlyRootFilesystem: false
+          runAsNonRoot: false
+        stdin: true
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        tty: true
+        volumeMounts:
+        - mountPath: /data
+          name: plex-media
+        - mountPath: /config
+          name: plex-config
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - hostPath:
+          path: /data/media/plex/media
+          type: ""
+        name: plex-media
+      - hostPath:
+          path: /data/media/plex/config
+          type: ""
+        name: plex-config
+status:
+  availableReplicas: 1
+  conditions:
+  - lastTransitionTime: 2018-12-29T23:00:16Z
+    lastUpdateTime: 2018-12-29T23:00:16Z
+    message: Deployment has minimum availability.
+    reason: MinimumReplicasAvailable
+    status: "True"
+    type: Available
+  - lastTransitionTime: 2018-12-29T22:59:23Z
+    lastUpdateTime: 2018-12-30T14:42:14Z
+    message: ReplicaSet "plex-5df79bb97c" has successfully progressed.
+    reason: NewReplicaSetAvailable
+    status: "True"
+    type: Progressing
+  observedGeneration: 12
+  readyReplicas: 1
+  replicas: 1
+  updatedReplicas: 1
