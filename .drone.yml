@@ -7,3 +7,11 @@ steps:
   commands:
   - cd neptune/nginx
   - make push
+  volumes:
+  - name: docker
+    path: /var/run/docker.sock
+
+volumes:
+- name: docker
+  host:
+    path: /var/run/docker.sock
