@@ -5,5 +5,5 @@ steps:
 - name: build
   image: docker:18.09
   commands:
-    cd neptune/nginx
-    make push
+  - cd neptune/nginx
+  - make push
