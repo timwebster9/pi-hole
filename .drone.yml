@@ -3,15 +3,12 @@ name: default
 
 steps:
 - name: build
-  image: timwebster9/build
-  commands:
-  - cd neptune/nginx
-  - make push
-  volumes:
-  - name: docker
-    path: /var/run/docker.sock
-
-volumes:
-- name: docker
-  host:
-    path: /var/run/docker.sock
+  image: plugins/docker
+  settings:
+    repo: timwebster9/nginx-neptune
+    dockerfile: neptune/nginx/Dockerfile
+    context: neptune/nginx
+    username:
+      from_secret: DOCKER_USERNAME
+    password:
+      from_secret: DOCKER_PASSWORD
