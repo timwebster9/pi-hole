@@ -177,8 +177,10 @@ spec:
 kind: Service
 apiVersion: v1
 metadata:
-  name: pihole-privileged-dnsudp
+  name: pihole-udp
   namespace: pihole-privileged
+  annotations:
+    metallb.universe.tf/allow-shared-ip: dns
 spec:
   selector:
     app: pihole-privileged
@@ -193,15 +195,21 @@ spec:
 kind: Service
 apiVersion: v1
 metadata:
-  name: pihole-privileged-web
+  name: pihole-tcp
   namespace: pihole-privileged
+  annotations:
+    metallb.universe.tf/allow-shared-ip: dns
 spec:
   selector:
     app: pihole-privileged
   ports:
   - protocol: TCP
+    port: 53
+    name: dnstcp
+    targetPort: 53
+  - protocol: TCP
     port: 80
     name: web
     targetPort: 80
   type: LoadBalancer
-  loadBalancerIP: 192.168.1.151
+  loadBalancerIP: 192.168.1.141

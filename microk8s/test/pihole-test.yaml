@@ -1,13 +1,13 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: pihole-default
+  name: pihole-test
 ---
 apiVersion: v1
 kind: ConfigMap
 metadata:
   name: pihole-ftl.conf
-  namespace: pihole-default
+  namespace: pihole-test
 data:
   pihole-FTL.conf: |
     MAXDBDAYS=7
@@ -16,35 +16,19 @@ data:
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: regex.list
-  namespace: pihole-default
-data:
-  regex.list: |
-    (^|\.)googlevideo\.com$
-    (^|\.)twitch\.tv$
-    (^|\.)wuaki\.tv$
-    (^|\.)youtube\.be$
-    (^|\.)youtube\.com$
-    (^|\.)xvpn\.com$
-    (^|\.)xvpn\.io$
-    (^|\.)tiktok\.com$
-    (^|\.)musical\.ly$
----
-apiVersion: v1
-kind: ConfigMap
-metadata:
   name: whitelist.txt
-  namespace: pihole-default
+  namespace: pihole-test
 data:
   whitelist.txt: |
     ichnaea.netflix.com
     nrdp.nccp.netflix.com
+    collector-medium.lightstep.com
 ---
 apiVersion: v1
 kind: ConfigMap
 metadata:
   name: adlists.list
-  namespace: pihole-default
+  namespace: pihole-test
 data:
   adlists.list: |
     https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts
@@ -53,12 +37,7 @@ data:
     https://s3.amazonaws.com/lists.disconnect.me/simple_tracking.txt
     https://s3.amazonaws.com/lists.disconnect.me/simple_ad.txt
     https://hosts-file.net/ad_servers.txt
-    https://blocklist.site/app/dl/porn
-    https://blocklist.site/app/dl/fakenews
     https://blocklist.site/app/dl/tracking
-    https://blocklist.site/app/dl/drugs
-    https://blocklist.site/app/dl/phishing
-    https://blocklist.site/app/dl/gambling
     https://blocklist.site/app/dl/malware
     https://blocklist.site/app/dl/spam
     https://blocklist.site/app/dl/ads
@@ -69,22 +48,19 @@ data:
     https://gitlab.com/quidsup/notrack-blocklists/raw/master/notrack-blocklist.txt
     https://v.firebog.net/hosts/Easyprivacy.txt
     https://v.firebog.net/hosts/Prigent-Ads.txt
-    https://blocklist.site/app/dl/scam
-    https://blocklist.site/app/dl/proxy
-    https://blocklist.site/app/dl/redirect
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: pihole-default
-  name: pihole-default
-  namespace: pihole-default
+    app: pihole-privileged
+  name: pihole-privileged
+  namespace: pihole-test
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: pihole-default
+      app: pihole-privileged
   strategy:
     rollingUpdate:
       maxSurge: 0
@@ -93,7 +69,7 @@ spec:
   template:
     metadata:
       labels:
-        app: pihole-default
+        app: pihole-privileged
     spec:
       containers:
       - env:
@@ -102,9 +78,9 @@ spec:
         - name: WEBPASSWORD
           value: Ad228234j4yws3Xk
         - name: DNS1
-          value: 185.228.168.168
+          value: 192.168.1.142#8553
         - name: DNS2
-          value: 185.228.169.168
+          value: 192.168.1.142#8553
         - name: CONDITIONAL_FORWARDING
           value: 'true'
         - name: CONDITIONAL_FORWARDING_DOMAIN
@@ -113,7 +89,7 @@ spec:
           value: 192.168.1.254
         image: pihole/pihole:4.3.2-1
         imagePullPolicy: IfNotPresent
-        name: pihole-default
+        name: pihole-privileged
         ports:
         - name: dns-tcp
           containerPort: 53
@@ -160,9 +136,6 @@ spec:
         - name: ftlconf
           mountPath: /etc/pihole/pihole-FTL.conf
           subPath: pihole-FTL.conf
-        - name: regex
-          mountPath: /etc/pihole/regex.list
-          subPath: regex.list
         - name: whitelist
           mountPath: /etc/pihole/whitelist.txt
           subPath: whitelist.txt
@@ -189,12 +162,6 @@ spec:
           items:
             - key: pihole-FTL.conf
               path: pihole-FTL.conf
-      - name: regex
-        configMap:
-          name: regex.list
-          items:
-            - key: regex.list
-              path: regex.list
       - name: whitelist
         configMap:
           name: whitelist.txt
@@ -211,31 +178,31 @@ spec:
 kind: Service
 apiVersion: v1
 metadata:
-  name: pihole-dns
-  namespace: pihole-default
+  name: pihole-udp
+  namespace: pihole-test
   annotations:
     metallb.universe.tf/allow-shared-ip: dns
 spec:
   selector:
-    app: pihole-default
+    app: pihole-privileged
   ports:
   - protocol: UDP
     port: 53
     name: dnsudp
     targetPort: 53
   type: LoadBalancer
-  loadBalancerIP: 192.168.1.140
+  loadBalancerIP: 192.168.1.160
 ---
 kind: Service
 apiVersion: v1
 metadata:
   name: pihole-tcp
-  namespace: pihole-default
+  namespace: pihole-test
   annotations:
     metallb.universe.tf/allow-shared-ip: dns
 spec:
   selector:
-    app: pihole-default
+    app: pihole-privileged
   ports:
   - protocol: TCP
     port: 53
@@ -246,4 +213,4 @@ spec:
     name: web
     targetPort: 80
   type: LoadBalancer
-  loadBalancerIP: 192.168.1.140
+  loadBalancerIP: 192.168.1.160

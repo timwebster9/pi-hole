@@ -38,8 +38,10 @@ spec:
 kind: Service
 apiVersion: v1
 metadata:
-  name: unbound
+  name: unbound-udp
   namespace: unbound
+  annotations:
+    metallb.universe.tf/allow-shared-ip: dns
 spec:
   selector:
     app: unbound
@@ -47,6 +49,24 @@ spec:
   - protocol: UDP
     port: 8553
     name: dnsudp
+    targetPort: 53
+  type: LoadBalancer
+  loadBalancerIP: 192.168.1.142
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: unbound-tcp
+  namespace: unbound
+  annotations:
+    metallb.universe.tf/allow-shared-ip: dns
+spec:
+  selector:
+    app: unbound
+  ports:
+  - protocol: TCP
+    port: 8553
+    name: dnstcp
     targetPort: 53
   type: LoadBalancer
   loadBalancerIP: 192.168.1.142
