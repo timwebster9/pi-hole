@@ -1,10 +1,15 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: plex
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
     app: plex
   name: plex
-  namespace: default
+  namespace: plex
 spec:
   progressDeadlineSeconds: 600
   replicas: 1
@@ -22,10 +27,12 @@ spec:
       labels:
         app: plex
     spec:
+      nodeSelector:
+        kubernetes.io/hostname: triton
       containers:
       - env:
         - name: PLEX_CLAIM
-          value: 
+          value: claim-HmztMpRyG8H4qHYmMU8A
         - name: VERSION
           value: docker
         image: linuxserver/plex:1.18.2.2058-e67a4e892-ls71
@@ -80,7 +87,7 @@ kind: Service
 apiVersion: v1
 metadata:
   name: plex-udp
-  namespace: default
+  namespace: plex
 spec:
   selector:
     app: plex
@@ -106,13 +113,13 @@ spec:
     name: gdm-32414
     protocol: UDP
   type: LoadBalancer
-  loadBalancerIP: 192.168.1.146
+  loadBalancerIP: 192.168.1.143
 ---
 kind: Service
 apiVersion: v1
 metadata:
   name: plex-tcp
-  namespace: default
+  namespace: plex
 spec:
   selector:
     app: plex
@@ -126,4 +133,4 @@ spec:
     name: dlna-tcp
     protocol: TCP
   type: LoadBalancer
-  loadBalancerIP: 192.168.1.147
+  loadBalancerIP: 192.168.1.153
