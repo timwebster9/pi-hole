@@ -211,7 +211,7 @@ spec:
 kind: Service
 apiVersion: v1
 metadata:
-  name: pihole-dns
+  name: pihole-udp
   namespace: pihole-default
   annotations:
     metallb.universe.tf/allow-shared-ip: dns
