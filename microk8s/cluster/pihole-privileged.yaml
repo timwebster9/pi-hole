@@ -77,9 +77,9 @@ spec:
         - name: WEBPASSWORD
           value: Ad228234j4yws3Xk
         - name: DNS1
-          value: 192.168.1.142#8553
+          value: 192.168.1.142
         - name: DNS2
-          value: 192.168.1.142#8553
+          value: 192.168.1.142
         - name: CONDITIONAL_FORWARDING
           value: 'true'
         - name: CONDITIONAL_FORWARDING_DOMAIN

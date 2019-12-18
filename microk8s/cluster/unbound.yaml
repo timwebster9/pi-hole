@@ -47,7 +47,7 @@ spec:
     app: unbound
   ports:
   - protocol: UDP
-    port: 8553
+    port: 53
     name: dnsudp
     targetPort: 53
   type: LoadBalancer
@@ -65,7 +65,7 @@ spec:
     app: unbound
   ports:
   - protocol: TCP
-    port: 8553
+    port: 53
     name: dnstcp
     targetPort: 53
   type: LoadBalancer
