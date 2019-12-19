@@ -1,0 +1,41 @@
+serviceAccounts:
+  alertmanager:
+    create: false
+  pushgateway:
+    create: false
+
+alertmanager:
+  enabled: false
+  # persistentVolume:
+  #   enabled: false
+  #   size: 1Gi
+  #   service:
+  #    type: LoadBalancer
+  #    loadBalancerIP: 192.168.1.145
+
+server:
+  persistentVolume:
+    enabled: false
+    size: 1Gi
+  service:
+    loadBalancerIP: 192.168.1.146
+    type: LoadBalancer
+
+nodeExporter:
+  enabled: true
+
+pushgateway:
+  enabled: false
+
+configmapReload:
+  name: configmap-reload
+  image:
+    repository: jimmidyson/configmap-reload
+    tag: v0.3.0
+
+kubeStateMetrics:
+  enabled: true
+  name: kube-state-metrics
+  image:
+    repository: k8s.gcr.io/kube-state-metrics-arm64
+    tag: v1.6.0

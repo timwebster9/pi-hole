@@ -39,6 +39,7 @@ data:
   whitelist.txt: |
     ichnaea.netflix.com
     nrdp.nccp.netflix.com
+    tracking.epicgames.com
 ---
 apiVersion: v1
 kind: ConfigMap

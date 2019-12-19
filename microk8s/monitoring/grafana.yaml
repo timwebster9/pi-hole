@@ -1,0 +1,40 @@
+image:
+  repository: grafana/grafana
+  tag: 6.5.2-ubuntu
+
+testFramework:
+  enabled: false
+
+downloadDashboardsImage:
+  repository: appropriate/curl
+  tag: latest
+  pullPolicy: IfNotPresent
+
+service:
+  type: LoadBalancer
+  loadBalancerIP: 192.168.1.147
+  port: 80
+  targetPort: 3000
+    # targetPort: 4181 To be used with a proxy extraContainer
+  annotations: {}
+  labels: {}
+  portName: service
+
+persistence:
+  enabled: false
+
+adminUser: admin
+adminPassword: password
+
+datasources:
+ datasources.yaml:
+   apiVersion: 1
+   datasources:
+   - name: Prometheus
+     type: prometheus
+     url: http://192.168.1.146
+     isDefault: true
+
+plugins:
+  - devopsprodigy-kubegraf-app
+  - grafana-piechart-panel
