@@ -22,6 +22,7 @@ data:
   whitelist.txt: |
     ichnaea.netflix.com
     nrdp.nccp.netflix.com
+    t.paypal.com
 ---
 apiVersion: v1
 kind: ConfigMap
