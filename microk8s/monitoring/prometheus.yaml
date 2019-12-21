@@ -23,6 +23,9 @@ server:
 
 nodeExporter:
   enabled: true
+  image:
+      repository: prom/node-exporter
+      tag: master
 
 pushgateway:
   enabled: false
