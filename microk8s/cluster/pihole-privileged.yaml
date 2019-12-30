@@ -23,6 +23,7 @@ data:
     ichnaea.netflix.com
     nrdp.nccp.netflix.com
     t.paypal.com
+    tracking.epicgames.com
 ---
 apiVersion: v1
 kind: ConfigMap

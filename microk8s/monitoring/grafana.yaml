@@ -36,5 +36,5 @@ datasources:
      isDefault: true
 
 plugins:
-  #- devopsprodigy-kubegraf-app
+  - devopsprodigy-kubegraf-app
   - grafana-piechart-panel
