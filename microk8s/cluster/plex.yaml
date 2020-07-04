@@ -35,7 +35,7 @@ spec:
           value: claim-HmztMpRyG8H4qHYmMU8A
         - name: VERSION
           value: docker
-        image: linuxserver/plex:1.18.2.2058-e67a4e892-ls71
+        image: linuxserver/plex:1.19.4.2935-79e214ead-ls106
         imagePullPolicy: IfNotPresent
         name: plex
         ports:

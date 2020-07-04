@@ -1,0 +1,5 @@
+LABEL=writable	/	 ext4	defaults	0 0
+LABEL=system-boot       /boot/firmware  vfat    defaults        0       1
+
+# SanDisk 1TB USB
+UUID=c7f5b792-252f-45f6-95f8-2cd68c95ab08    /mnt/storage1    ext4    defaults    0    0

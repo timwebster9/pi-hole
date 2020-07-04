@@ -53,9 +53,7 @@ data:
     http://sysctl.org/cameleon/hosts
     https://s3.amazonaws.com/lists.disconnect.me/simple_tracking.txt
     https://s3.amazonaws.com/lists.disconnect.me/simple_ad.txt
-    https://hosts-file.net/ad_servers.txt
     https://blocklist.site/app/dl/porn
-    https://blocklist.site/app/dl/fakenews
     https://blocklist.site/app/dl/tracking
     https://blocklist.site/app/dl/drugs
     https://blocklist.site/app/dl/phishing
@@ -141,13 +139,13 @@ spec:
         readinessProbe:
           exec:
             command: ['dig', '@127.0.0.1', 'cnn.com']
-          timeoutSeconds: 20
-          initialDelaySeconds: 5
+          timeoutSeconds: 30
+          initialDelaySeconds: 120
           periodSeconds: 60
         livenessProbe:
           tcpSocket:
             port: dns-tcp
-          initialDelaySeconds: 15
+          initialDelaySeconds: 300
           periodSeconds: 30
         volumeMounts:
         - name: etc-pihole
