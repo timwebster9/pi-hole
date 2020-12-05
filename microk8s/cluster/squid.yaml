@@ -1,0 +1,49 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: squid
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: squid
+  name: squid
+  namespace: squid
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: squid
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: squid
+    spec:
+      containers:
+      - name: squid
+        image: timwebster9/squid:1.0.0
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 3128
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: squid-tcp
+  namespace: squid
+spec:
+  selector:
+    app: squid
+  ports:
+  - protocol: TCP
+    port: 3128
+    name: squidtcp
+    targetPort: 3128
+  type: LoadBalancer
+  loadBalancerIP: 192.168.1.150

@@ -1,0 +1,1 @@
+docker build -t timwebster9/squid:1.0.0 .
