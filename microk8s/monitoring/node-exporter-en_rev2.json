@@ -2121,7 +2121,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "node_hwmon_temp_celsius{instance=~'$node'}",
+          "expr": "node_thermal_zone_temp{instance=~'$node'}",
           "format": "time_series",
           "intervalFactor": 10,
           "legendFormat": "{{instance}}_{{chip}}_{{sensor}}",
@@ -2132,7 +2132,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Hardware Temperature(VM may not display the metrics)",
+      "title": "Hardware Temperature",
       "tooltip": {
         "shared": true,
         "sort": 2,

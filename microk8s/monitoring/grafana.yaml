@@ -1,6 +1,6 @@
 image:
   repository: grafana/grafana
-  tag: 6.5.2-ubuntu
+  tag: 7.3.4-ubuntu
 
 testFramework:
   enabled: false
